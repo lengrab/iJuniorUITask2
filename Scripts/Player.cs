@@ -3,8 +3,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const int MinSetableHealth = 10;
+    private const int MaxSetableHealth = 100;
 
-    [Range(10,100)]
+    [Range(MinSetableHealth,MaxSetableHealth)]
     [SerializeField] private int _maxHealth;
 
     public int Health { get; private set; }
@@ -39,10 +40,7 @@ public class Player : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_maxHealth < MinSetableHealth)
-        {
-            _maxHealth = MinSetableHealth;
-        }
+        Mathf.Clamp(_maxHealth,MinSetableHealth,MaxSetableHealth );
 
         Health = _maxHealth;
     }
