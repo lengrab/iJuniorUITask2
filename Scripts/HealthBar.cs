@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private Slider _slider;
     [Range(0,2)]
     [SerializeField] private float _transitionTime;
+    [SerializeField] private Player _player;
+    [SerializeField] private Slider _slider;
 
+    private float _slideTolerance = 0.01f;
     private Coroutine _slide;
     private WaitForFixedUpdate _wait;
-    private float _slideTolerance = 0.001f;
 
     public void Initialize(Player player)
     {
@@ -34,7 +34,7 @@ public class HealthBar : MonoBehaviour
 
     private void OnHeathChanged()
     {
-        float targetValue = (float)_player.Health / (float)_player.MaxHealth;
+        float targetValue = _player.Health / (float)_player.MaxHealth;
         
         if (_slide != null)
         {
