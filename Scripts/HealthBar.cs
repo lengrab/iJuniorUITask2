@@ -20,7 +20,6 @@ public class HealthBar : MonoBehaviour
     {
         _player = player;
         _player.HealthChanged.AddListener(OnHeathChanged);
-
     }
 
     private void Awake()
