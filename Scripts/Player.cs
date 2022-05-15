@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class Player : MonoBehaviour
     public int Health { get; private set; }
     public int MaxHealth => _maxHealth;
 
+    public UnityEvent HealthChanged;
+
     public void TakeDamage(int damage)
     {
         if (damage < Health)
         {
             Health -= damage;
+            HealthChanged.Invoke();
         }
         else
         {
@@ -35,6 +39,7 @@ public class Player : MonoBehaviour
             {
                 Health = _maxHealth;
             }
+            HealthChanged.Invoke();
         }
     }
 

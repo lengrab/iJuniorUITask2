@@ -1,35 +1,48 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(Slider))]
 
 public class HealthBar : MonoBehaviour
 {
     [Range(0,2)]
     [SerializeField] private float _transitionTime;
     [SerializeField] private Player _player;
-    [SerializeField] private Slider _slider;
 
     private float _slideTolerance = 0.01f;
+    private Slider _slider;
     private Coroutine _slide;
     private WaitForFixedUpdate _wait;
 
     public void Initialize(Player player)
     {
         _player = player;
+        _player.HealthChanged.AddListener(OnHeathChanged);
+
     }
 
-    public void OnTakeDamage(int damage)
+    private void Awake()
     {
-        _player.TakeDamage(damage);
+        _slider = GetComponent<Slider>();
         OnHeathChanged();
     }
 
-    public void OnTakeHealth(int health)
+    private void OnEnable()
     {
-        _player.TakeHealth(health);
-        OnHeathChanged();
+        if (_player != null)
+        {
+            _player.HealthChanged.AddListener( OnHeathChanged);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_player != null)
+        {
+            _player.HealthChanged.RemoveListener(OnHeathChanged);
+        }
     }
 
     private void OnHeathChanged()
@@ -42,11 +55,6 @@ public class HealthBar : MonoBehaviour
         }
 
         _slide = StartCoroutine(SlideTo(targetValue));
-    }
-
-    private void Awake()
-    {
-        OnHeathChanged();
     }
 
     private IEnumerator SlideTo(float target)
