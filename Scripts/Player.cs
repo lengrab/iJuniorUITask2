@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public int Health { get; private set; }
     public int MaxHealth => _maxHealth;
 
-    public UnityAction HealthChanged;
+    public event UnityAction HealthChanged;
 
     public void TakeDamage(int damage)
     {
