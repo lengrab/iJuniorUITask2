@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public int Health { get; private set; }
     public int MaxHealth => _maxHealth;
 
-    public UnityEvent HealthChanged;
+    public UnityAction HealthChanged;
 
     public void TakeDamage(int damage)
     {
@@ -27,18 +27,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeHealth(int health)
+    public void Heal(int health)
     {
         if (health > 0)
         {
-            if (Health + health < _maxHealth)
-            {
-                Health += health;
-            }
-            else
-            {
-                Health = _maxHealth;
-            }
+            Health = Mathf.Clamp(Health + health, 0, _maxHealth);
             HealthChanged.Invoke();
         }
     }

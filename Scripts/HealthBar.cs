@@ -19,7 +19,7 @@ public class HealthBar : MonoBehaviour
     public void Initialize(Player player)
     {
         _player = player;
-        _player.HealthChanged.AddListener(OnHeathChanged);
+        _player.HealthChanged += OnHeathChanged;
     }
 
     private void Awake()
@@ -32,7 +32,7 @@ public class HealthBar : MonoBehaviour
     {
         if (_player != null)
         {
-            _player.HealthChanged.AddListener( OnHeathChanged);
+            _player.HealthChanged += OnHeathChanged;
         }
     }
 
@@ -40,7 +40,7 @@ public class HealthBar : MonoBehaviour
     {
         if (_player != null)
         {
-            _player.HealthChanged.RemoveListener(OnHeathChanged);
+            _player.HealthChanged -= OnHeathChanged;
         }
     }
 
